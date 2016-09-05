@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+ <link type="text/css" rel="stylesheet" href="top.css"/>
+<body background="fon.jpg"> 
+
+<div id="wrap">
+  <form action="" id="cakeform">
+    <fieldset>
+      <legend>Buy a car</legend>
+      <label>1. Выберите тип машины</label>
+      <br/>
+      <input type="radio" name="selectedcake" value="Round6" /> Седан
+      <br/>
+      <input type="radio" name="selectedcake" value="Round8" /> Джип
+      <br/>
+      <input type="radio" name="selectedcake" value="Round10" /> Кабриолет
+      <br/>
+      <input type="radio" name="selectedcake" value="Round12" /> Спорткар
+      <br/>
+  
+      <br/>
+      <br/>
+      <label>2. Двигатель </label>
+
+      <select id="filling" name='filling'>
+        <option value="None">выбрать</option>
+        <option value="21">5х</option>
+        <option value="22">6х</option>
+        <option value="23">8х</option>
+        <option value="00">10х</option>
+        <option value="2">12х</option>
+        
+      </select>
+      <br/>
+	  
+	   <br/>
+      <br/>
+      <label>3. Тюннинг</label>
+
+      <select id="filling3" name='filling3'>
+        <option value="None">выбрать</option>
+        <option value="21">Город</option>
+        <option value="22">Бездорожье</option>
+        <option value="23">Спорт</option>
+        <option value="00">Гоночный</option>
+        <option value="2">Эксклюзив</option>
+        
+      </select>
+      <br/>
+      <p>
+        <label for='fast' class="inlinelabel">4. Карбоновый корпус</label>
+        <input type="checkbox" id="fast" name='fast' />
+      </p>
+
+      <p>
+        <label class="inlinelabel" for='health'>5. Автоматическая коробка передач</label>
+        <input type="checkbox" id="health" name="health" />
+
+     
+      </p>
+	  
+
+      <p>
+        <label for='smoke' class="inlinelabel">6. Газболлнное оборудование</label>
+        <input type="checkbox" id="smoke" name='smoke' />
+      </p>
+
+	  
+
+      <p>
+        <label for='alc' class="inlinelabel">7. Электромобиль </label>
+        <input type="checkbox" id="alc" name='alc' />
+      </p>
+
+	  <br>
+	  <label>8. Руль</label>
+
+      <select id="filling2" name='filling2'>
+	   <option value="None">выбрать</option>
+        <option value="1">Справа</option>
+        <option value="2">Слева(стандарт)</option>
+      
+    
+       
+      </select>
+      <div id="totalPrice"></div>
+
+    </fieldset>
+  </form>
+</div>
+	<script>
+	var e=" $";
+		var cakeForm = document.getElementById('cakeform');
+		var totalPriceText = "Ваша машина будет стоить: ";
+
+		var cakeSizes = [];
+		cakeSizes["Round6"]=20000; 
+		cakeSizes["Round8"]=40000;
+		cakeSizes["Round10"]=60000;
+		cakeSizes["Round12"]=150000;
+		
+		
+		var getCakeSizePrice = function(){
+		    var selectedCakes = cakeForm.elements["selectedcake"];
+		    for (var i=0; i< selectedCakes.length; i++)
+			{
+			if (selectedCakes[i].checked)
+			 {
+			  var selectedCakeSize= selectedCakes[i].value;
+			 
+			  return cakeSizes[selectedCakeSize] ; 
+		
+			 } 
+			}
+			return 0;
+		};
+		var cakeFillingsPrices = [];
+				cakeFillingsPrices["None"]=0;
+		cakeFillingsPrices["21"]=+12655;
+		cakeFillingsPrices["22"]=+16356;
+		cakeFillingsPrices["23"]=+19500;
+		cakeFillingsPrices["00"]=+60500;
+		cakeFillingsPrices["2"]=+140000;
+
+var cakeFillingsPrices2 = [];
+				cakeFillingsPrices2["None"]=0;
+		cakeFillingsPrices2["1"]=+7500;
+		cakeFillingsPrices2["2"]=0;
+		
+	
+	var cakeFillingsPrices3 = [];
+				cakeFillingsPrices3["None"]=0;
+		cakeFillingsPrices3["21"]=+12500;
+		cakeFillingsPrices3["22"]=+24999;
+		cakeFillingsPrices3["23"]=+40250;
+		cakeFillingsPrices3["00"]=+45889;
+		cakeFillingsPrices3["2"]=+75400;
+		
+		var getLabel = function()
+		{ if (fast.checked)
+		return +90000;
+		return 0;
+		}
+		
+		var getLabel2 = function()
+		{ if (health.checked)
+		return +12999;
+			return 0;
+		}
+		
+		var getLabel3 = function()
+		{ if (alc.checked)
+		return -25000;
+			return 0;
+		}
+		var getLabel4 = function()
+		{ if (smoke.checked)
+		return +1599;
+			return 0;
+		}
+
+		
+		var getFilling = function()
+		{
+			cakeFillingPrice = 0;
+			var selectedFilling = cakeForm.elements["filling"];
+			cakeFillingPrice = cakeFillingsPrices[selectedFilling.value];
+			return cakeFillingPrice;
+		}
+		var getFilling2 = function()
+		{
+			cakeFillingPrice2 = 0;
+			var selectedFilling2 = cakeForm.elements["filling2"];
+			cakeFillingPrice2 = cakeFillingsPrices2[selectedFilling2.value];
+			return cakeFillingPrice2;
+		}
+		
+		var getFilling3 = function()
+		{
+			cakeFillingPrice3 = 0;
+			var selectedFilling3 = cakeForm.elements["filling3"];
+			cakeFillingPrice3 = cakeFillingsPrices3[selectedFilling3.value];
+			return cakeFillingPrice3;
+		}
+		var calculateTotal = function(){
+		    var total = getCakeSizePrice()+ getFilling() +getLabel() +getLabel2() +getLabel3() +getLabel4() + getFilling2() + getFilling3() + e;
+		    var totalDiv = document.getElementById('totalPrice');
+		    totalDiv.innerHTML = totalPriceText+" "+total;
+		};
+		
+		
+		
+		document.getElementById('filling').onchange=calculateTotal;
+		
+		document.getElementById('filling2').onchange=calculateTotal;
+		document.getElementById('filling3').onchange=calculateTotal;
+			var inputElems=cakeForm.getElementsByTagName('input');
+		    for (var i=0; i< inputElems.length; i++)
+		     inputElems[i].onclick = calculateTotal;
+
+			
+		
+	
+	</script>
+</body>
+</html> 
